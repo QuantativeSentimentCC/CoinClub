@@ -1,0 +1,32 @@
+{
+	"AWSEBDockerrunVersion": 2,
+	"containerDefinitions": [
+		{
+			"essential": true,
+			"image": "mongo",
+			"name": "database",
+			"memory": 256,
+			"portMappings": [
+				{
+					"containerPort": 27017,
+					"hostPort": 27017
+				}
+			]
+		},
+		{
+			"essential": true,
+			"image": "haoyuan723/express-server2",
+			"links": ["database"],
+			"name": "express",
+			"memory": 256,
+			"portMappings": [
+				{
+					"containerPort": 3000,
+					"hostPort": 80
+				}
+			]
+		}
+	],
+	"family": "",
+	"volumes": []
+}
