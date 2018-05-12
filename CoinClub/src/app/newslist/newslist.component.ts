@@ -8,9 +8,16 @@ import { DataService } from '../data.service';
 })
 export class NewslistComponent implements OnInit {
   newsList: Array<any>;
-  constructor(private _dataService: DataService) {
-    this._dataService.getNews().subscribe(res => (this.newsList = res));
+  interval: any;
+
+  constructor(private _dataService: DataService) {}
+
+  ngOnInit() {
+    this.refreshNews();
+    setInterval(() => this.refreshNews(), 60000);
   }
 
-  ngOnInit() {}
+  refreshNews() {
+    this._dataService.getNews().subscribe(res => (this.newsList = res));
+  }
 }

@@ -4,7 +4,19 @@
 }
 
 .price_panel {
+}
+
+.result_panel {
+  border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
+}
+
+.pred_result {
+  padding: 3px 0px;
+  color: white;
+  background-color: #2eb82e;
+  border-radius: 10px;
+  border-width: thin;
 }
 
 .pred_panel {

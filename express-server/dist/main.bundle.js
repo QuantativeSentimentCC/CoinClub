@@ -301,7 +301,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-8\">\n    <h1>Headlines</h1>\n  </div>\n  <div class=\"col-md-4\">\n    <app-sidepanel></app-sidepanel>\n  </div>\n</div>\n<br>\n<div class=\"full-width\">\n    <app-slider></app-slider>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-md-12\">\n    <h1>Latest News</h1>\n  </div>\n</div>\n<hr>\n<div class=\"row\">\n  <div class=\"col-md-12\">\n    <app-newslist></app-newslist>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h1>Headlines</h1>\n  </div>\n  <div class=\"col-md-6\">\n    <app-sidepanel></app-sidepanel>\n  </div>\n</div>\n<br>\n<div class=\"full-width\">\n    <app-slider></app-slider>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-md-12\">\n    <h1>Latest News</h1>\n  </div>\n</div>\n<hr>\n<div class=\"row\">\n  <div class=\"col-md-12\">\n    <app-newslist></app-newslist>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -601,11 +601,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var NewslistComponent = /** @class */ (function () {
     function NewslistComponent(_dataService) {
-        var _this = this;
         this._dataService = _dataService;
-        this._dataService.getNews().subscribe(function (res) { return (_this.newsList = res); });
     }
-    NewslistComponent.prototype.ngOnInit = function () { };
+    NewslistComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.refreshNews();
+        setInterval(function () { return _this.refreshNews(); }, 60000);
+    };
+    NewslistComponent.prototype.refreshNews = function () {
+        var _this = this;
+        this._dataService.getNews().subscribe(function (res) { return (_this.newsList = res); });
+    };
     NewslistComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-newslist',
@@ -629,7 +635,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".side_panel {\n  margin-top: 70px;\n  text-align: center;\n}\n\n.price_panel {\n  border-right: 1px solid #ccc;\n}\n\n.pred_panel {\n}\n", ""]);
+exports.push([module.i, ".side_panel {\n  margin-top: 70px;\n  text-align: center;\n}\n\n.price_panel {\n}\n\n.result_panel {\n  border-left: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n}\n\n.pred_result {\n  padding: 3px 0px;\n  color: white;\n  background-color: #2eb82e;\n  border-radius: 10px;\n  border-width: thin;\n}\n\n.pred_panel {\n}\n", ""]);
 
 // exports
 
@@ -642,7 +648,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sidepanel/sidepanel.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row side_panel\">\n  <div class=\"col-xs-6 price_panel\">\n    <h4>BTC Price</h4>\n    <h4>{{\"$\" + this.price}}</h4>\n  </div>\n  <div class=\"col-xs-6 pred_panel\">\n    <h4>Price Trend</h4>\n    <h4>Rise</h4>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row side_panel\">\n  <div class=\"col-xs-4 price_panel\">\n    <h5>BTC Price</h5>\n    <h4>{{\"$\" + this.price}}</h4>\n  </div>\n  <div class=\"col-xs-4 result_panel\">\n    <div class=\"pred_result\">\n      <h5>Price Trend</h5>\n      <h5>Rise</h5>\n    </div>\n  </div>\n  <div class=\"col-xs-4 pred_panel\">\n    <h5>Next 5 Min Trend</h5>\n    <button type=\"button\" class=\"\">Predict!</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -666,11 +672,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var SidepanelComponent = /** @class */ (function () {
     function SidepanelComponent(_dataService) {
-        var _this = this;
         this._dataService = _dataService;
-        this._dataService.getPrice().subscribe(function (res) { return (_this.price = res['price']); });
     }
-    SidepanelComponent.prototype.ngOnInit = function () { };
+    SidepanelComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.refreshPrice();
+        setInterval(function () { return _this.refreshPrice(); }, 30000);
+    };
+    SidepanelComponent.prototype.refreshPrice = function () {
+        var _this = this;
+        this._dataService.getPrice().subscribe(function (res) { return (_this.price = res['price']); });
+    };
     SidepanelComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-sidepanel',
@@ -707,7 +719,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/slider/slider.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--<slideshow [imageUrls]=\"this.urls\"></slideshow>-->\n<div class=\"row\">\n  <div class=\"col-sm-4 padding-0 container\">\n    <a href=\"{{this.headLines[0].url}}\">\n      <div class=\"darken-pseudo\">\n        <img src=\"{{this.headLines[0].urlToImage}}\" />\n      </div>\n      <div class=\"top-left\">\n        <h4 class=\"source\">{{this.headLines[2].source.name}}</h4>\n        <h2>{{this.headLines[0].title}}</h2>\n        <h4>{{this.headLines[0].publishedAt.substring(0, 10)}}</h4>\n      </div>\n    </a>\n  </div>\n  <div class=\"col-sm-4 padding-0 container\">\n    <a href=\"{{this.headLines[1].url}}\">\n      <div class=\"darken-pseudo\">\n        <img src=\"{{this.headLines[1].urlToImage}}\" />\n      </div>\n      <div class=\"top-left\">\n        <h4 class=\"source\">{{this.headLines[1].source.name}}</h4>\n        <h2>{{this.headLines[1].title}}</h2>\n        <h4>{{this.headLines[1].publishedAt.substring(0, 10)}}</h4>\n      </div>\n    </a>\n  </div>\n  <div class=\"col-sm-4 padding-0 container\">\n    <a href=\"{{this.headLines[2].url}}\">\n      <div class=\"darken-pseudo\">\n        <img src=\"{{this.headLines[2].urlToImage}}\" />\n      </div>\n      <div class=\"top-left\">\n        <h4 class=\"source\">{{this.headLines[2].source.name}}</h4>\n        <h2>{{this.headLines[2].title}}</h2>\n        <h4>{{this.headLines[2].publishedAt.substring(0, 10)}}</h4>\n      </div>\n    </a>\n  </div>\n</div>\n"
+module.exports = "<!--<slideshow [imageUrls]=\"this.urls\"></slideshow>-->\n<div class=\"row\" *ngIf=\"isDataAvailable\">\n  <div class=\"col-sm-4 padding-0 container\">\n    <a href=\"{{this.headLines[0].url}}\">\n      <div class=\"darken-pseudo\">\n        <img src=\"{{this.headLines[0].urlToImage}}\" />\n      </div>\n      <div class=\"top-left\">\n        <h4 class=\"source\">{{this.headLines[0].source.name}}</h4>\n        <h2>{{this.headLines[0].title}}</h2>\n        <h4>{{this.headLines[0].publishedAt.substring(0, 10)}}</h4>\n      </div>\n    </a>\n  </div>\n  <div class=\"col-sm-4 padding-0 container\">\n    <a href=\"{{this.headLines[1].url}}\">\n      <div class=\"darken-pseudo\">\n        <img src=\"{{this.headLines[1].urlToImage}}\" />\n      </div>\n      <div class=\"top-left\">\n        <h4 class=\"source\">{{this.headLines[1].source.name}}</h4>\n        <h2>{{this.headLines[1].title}}</h2>\n        <h4>{{this.headLines[1].publishedAt.substring(0, 10)}}</h4>\n      </div>\n    </a>\n  </div>\n  <div class=\"col-sm-4 padding-0 container\">\n    <a href=\"{{this.headLines[2].url}}\">\n      <div class=\"darken-pseudo\">\n        <img src=\"{{this.headLines[2].urlToImage}}\" />\n      </div>\n      <div class=\"top-left\">\n        <h4 class=\"source\">{{this.headLines[2].source.name}}</h4>\n        <h2>{{this.headLines[2].title}}</h2>\n        <h4>{{this.headLines[2].publishedAt.substring(0, 10)}}</h4>\n      </div>\n    </a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -731,17 +743,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var SliderComponent = /** @class */ (function () {
     function SliderComponent(_dataService) {
-        var _this = this;
         this._dataService = _dataService;
         this.defaultUrls = [
             'https://static01.nyt.com/images/2018/04/25/us/politics/25dc-cfpb1/25dc-cfpb1-facebookJumbo.jpg',
             'https://localtvwtvr.files.wordpress.com/2018/04/subway-dog.jpeg?quality=85&strip=all',
             'https://apple.insidercdn.com/gallery/25791-35675-Image-result-for-site-appleinsidercom-supreme-court-xl.jpg'
         ];
-        this._dataService.getHeadlines().subscribe(function (res) { return (_this.headLines = res); });
-        console.log(this.headLines);
+        this.isDataAvailable = false;
     }
-    SliderComponent.prototype.ngOnInit = function () { };
+    SliderComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._dataService.getHeadlines().subscribe(function (res) {
+            _this.headLines = res;
+            _this.isDataAvailable = true;
+            //console.log(this.headLines);
+        });
+    };
     SliderComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-slider',

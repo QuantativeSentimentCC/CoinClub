@@ -8,9 +8,14 @@ import { DataService } from '../data.service';
 })
 export class SidepanelComponent implements OnInit {
   price: string;
-  constructor(private _dataService: DataService) {
-    this._dataService.getPrice().subscribe(res => (this.price = res['price']));
+  constructor(private _dataService: DataService) {}
+
+  ngOnInit() {
+    this.refreshPrice();
+    setInterval(() => this.refreshPrice(), 30000);
   }
 
-  ngOnInit() {}
+  refreshPrice() {
+    this._dataService.getPrice().subscribe(res => (this.price = res['price']));
+  }
 }
