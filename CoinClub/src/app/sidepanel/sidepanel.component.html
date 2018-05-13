@@ -1,16 +1,14 @@
 <div class="row side_panel">
-  <div class="col-xs-4 price_panel">
+  <div class="col-xs-4">
     <h5>BTC Price</h5>
     <h4>{{"$" + this.price}}</h4>
   </div>
   <div class="col-xs-4 result_panel">
-    <div class="pred_result">
-      <h5>Price Trend</h5>
-      <h5>Rise</h5>
-    </div>
+    <h5>Price Prediction</h5>
+    <h4>{{"$" + this.predicted_price}}</h4>
   </div>
-  <div class="col-xs-4 pred_panel">
-    <h5>Next 5 Min Trend</h5>
-    <button type="button" class="">Predict!</button>
+  <div class="col-xs-4">
+    <h5>Next 1 Minute Price</h5>
+    <button type="button" class="button" (click)="this.refreshPrediction()">Predict!</button>
   </div>
 </div>

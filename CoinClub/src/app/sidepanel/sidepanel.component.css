@@ -3,21 +3,18 @@
   text-align: center;
 }
 
-.price_panel {
-}
-
 .result_panel {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
 }
 
-.pred_result {
-  padding: 3px 0px;
+.button {
+  background-color: #4caf50;
+  border: none;
   color: white;
-  background-color: #2eb82e;
-  border-radius: 10px;
-  border-width: thin;
-}
-
-.pred_panel {
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
 }

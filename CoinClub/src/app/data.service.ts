@@ -28,6 +28,12 @@ export class DataService {
       .map(result => (this.result = result.json().data));
   }
 
+  getPredPrice() {
+    return this._http
+      .get('/api/prediction')
+      .map(result => (this.result = result.json().data));
+  }
+
   getHeadlines() {
     return this._http
       .get('/api/headlines')

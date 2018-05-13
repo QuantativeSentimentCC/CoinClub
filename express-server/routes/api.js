@@ -29,8 +29,8 @@ let response = {
 
 // Get news
 router.get('/news', (req, res) => {
-  MongoClient.connect('mongodb://database:27017', (err, client) => {
-    //MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+  //MongoClient.connect('mongodb://database:27017', (err, client) => {
+  MongoClient.connect('mongodb://localhost:27017', (err, client) => {
     if (err) throw err;
     client
       .db('cs5412')
@@ -50,8 +50,8 @@ router.get('/news', (req, res) => {
 });
 
 router.get('/news/:news_id', (req, res) => {
-  MongoClient.connect('mongodb://database:27017', (err, client) => {
-    //MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+  //MongoClient.connect('mongodb://database:27017', (err, client) => {
+  MongoClient.connect('mongodb://localhost:27017', (err, client) => {
     if (err) throw err;
     client
       .db('cs5412')
@@ -68,8 +68,8 @@ router.get('/news/:news_id', (req, res) => {
 });
 
 router.get('/price', (req, res) => {
-  MongoClient.connect('mongodb://database:27017', (err, client) => {
-    //MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+  //MongoClient.connect('mongodb://database:27017', (err, client) => {
+  MongoClient.connect('mongodb://localhost:27017', (err, client) => {
     if (err) throw err;
     client
       .db('cs5412')
@@ -97,6 +97,27 @@ router.get('/headlines', (req, res) => {
     response.data = headlines.articles.filter(obj => obj.urlToImage != null);
     //console.log(response.data);
     res.json(response);
+  });
+});
+
+router.get('/prediction', (req, res) => {
+  //MongoClient.connect('mongodb://database:27017', (err, client) => {
+  MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+    if (err) throw err;
+    client
+      .db('cs5412')
+      .collection('prediction_data')
+      .find({})
+      .sort({ timestamp: -1 })
+      .limit(1)
+      .toArray()
+      .then(prices => {
+        response.data = prices[0];
+        res.json(response);
+      })
+      .catch(err => {
+        sendError(err, res);
+      });
   });
 });
 

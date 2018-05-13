@@ -202,6 +202,12 @@ var DataService = /** @class */ (function () {
             .get('/api/price')
             .map(function (result) { return (_this.result = result.json().data); });
     };
+    DataService.prototype.getPredPrice = function () {
+        var _this = this;
+        return this._http
+            .get('/api/prediction')
+            .map(function (result) { return (_this.result = result.json().data); });
+    };
     DataService.prototype.getHeadlines = function () {
         var _this = this;
         return this._http
@@ -635,7 +641,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".side_panel {\n  margin-top: 70px;\n  text-align: center;\n}\n\n.price_panel {\n}\n\n.result_panel {\n  border-left: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n}\n\n.pred_result {\n  padding: 3px 0px;\n  color: white;\n  background-color: #2eb82e;\n  border-radius: 10px;\n  border-width: thin;\n}\n\n.pred_panel {\n}\n", ""]);
+exports.push([module.i, ".side_panel {\n  margin-top: 70px;\n  text-align: center;\n}\n\n.result_panel {\n  border-left: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n}\n\n.button {\n  background-color: #4caf50;\n  border: none;\n  color: white;\n  padding: 5px 15px;\n  text-align: center;\n  text-decoration: none;\n  display: inline-block;\n  border-radius: 5px;\n}\n", ""]);
 
 // exports
 
@@ -648,7 +654,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sidepanel/sidepanel.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row side_panel\">\n  <div class=\"col-xs-4 price_panel\">\n    <h5>BTC Price</h5>\n    <h4>{{\"$\" + this.price}}</h4>\n  </div>\n  <div class=\"col-xs-4 result_panel\">\n    <div class=\"pred_result\">\n      <h5>Price Trend</h5>\n      <h5>Rise</h5>\n    </div>\n  </div>\n  <div class=\"col-xs-4 pred_panel\">\n    <h5>Next 5 Min Trend</h5>\n    <button type=\"button\" class=\"\">Predict!</button>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row side_panel\">\n  <div class=\"col-xs-4\">\n    <h5>BTC Price</h5>\n    <h4>{{\"$\" + this.price}}</h4>\n  </div>\n  <div class=\"col-xs-4 result_panel\">\n    <h5>Price Prediction</h5>\n    <h4>{{\"$\" + this.predicted_price}}</h4>\n  </div>\n  <div class=\"col-xs-4\">\n    <h5>Next 1 Minute Price</h5>\n    <button type=\"button\" class=\"button\" (click)=\"this.refreshPrediction()\">Predict!</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -677,11 +683,21 @@ var SidepanelComponent = /** @class */ (function () {
     SidepanelComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.refreshPrice();
+        this.predicted_price = '-';
+        //this.refreshPrediction();
         setInterval(function () { return _this.refreshPrice(); }, 30000);
     };
     SidepanelComponent.prototype.refreshPrice = function () {
         var _this = this;
         this._dataService.getPrice().subscribe(function (res) { return (_this.price = res['price']); });
+    };
+    SidepanelComponent.prototype.refreshPrediction = function () {
+        var _this = this;
+        this._dataService.getPredPrice().subscribe(function (res) {
+            return (_this.predicted_price = parseFloat(res['price_predicted'])
+                .toFixed(2)
+                .toString());
+        });
     };
     SidepanelComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
